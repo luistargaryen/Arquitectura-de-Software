@@ -1,0 +1,54 @@
+1) Construir la Imagen del Backend
+    #cd ./backend
+    #docker build -t backend-swarm .
+
+2) Construir la Imagen del Frontend
+    #cd ./frontend
+    #docker build -t frontend-swarm .
+
+3) Inicializar Docker Swarm
+    #docker swarm init --advertise-addr 192.168.31.199
+
+4) Desplegar el stack
+    #docker stack deploy -c docker-stack.yml docker-swarm
+
+http://localhost:5573
+
+Remove-Item -Recurse -Force .\node_modules
+Remove-Item -Force .\package-lock.json
+npm cache clean --force
+npm install
+npm run build
+
+**Listar contenedores activos
+    #docker ps
+
+**Listar los servicios corriendo en un contenedor
+    #docker stack services docker-swarm
+
+**Para Ajustar el Numero de Replicas que se hacen en el Backend:
+    #docker service scale docker-swarm_backend=1
+
+**Parar y Eliminar Contenedores
+    #docker ps
+    #docker stop <nombre_o_id_del_contenedor>
+    #docker rm <nombre_o_id_del_contenedor>
+
+**Parar y Eliminar Servicios en Docker Swarm
+    **Listar los Servicios del Stack
+        #docker stack services docker-swarm
+    **Parar (escalar a 0) y Eliminar los Servicios
+        **Backend
+            #docker service scale docker-swarm_backend=0
+            #docker service rm docker-swarm_backend
+        **Frontend
+            #docker service scale docker-swarm_frontend=0
+            #docker service rm docker-swarm_frontend
+        **DB
+            #docker service scale docker-swarm_db=0
+            #docker service rm docker-swarm_db
+
+
+
+
+

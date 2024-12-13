@@ -1,0 +1,45 @@
+services:
+
+  frontend:
+    image: frontend-swarm
+    build: 
+      context: ./frontend
+    ports:
+      - "5573:80"
+    depends_on:
+      - backend
+    deploy:
+      replicas: 2
+
+  backend:
+    image: backend-swarm
+    build: 
+      context: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_USER=postgres
+      - DB_HOST=host.docker.internal
+      - DB_DATABASE=sistema_de_inscripcion
+      - DB_PASSWORD=01092003
+      - DB_PORT=5432
+    depends_on:
+      - db
+    deploy:
+      replicas: 4
+
+  db:
+    image: postgres:16-swarm
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=01092003
+      - POSTGRES_DB=sistema_de_inscripcion
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+volumes:
+  postgres_data:
+
+
