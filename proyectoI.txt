@@ -1,6 +1,22 @@
-#docker network create my_network
-#docker run -d --name db --network my_network -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=01092003 -e POSTGRES_DB=prueba -v postgres_data:/var/lib/postgresql/data -p 5433:5432 postgres:16
-#docker build -t backend_image ./backend
-#docker run -d --name backend --network my_network -e DB_USER=postgres -e DB_HOST=localhost -e DB_DATABASE=prueba -e DB_PASSWORD=01092003 -e DB_PORT=5432 -p 5000:5000 backend_image
-#docker build -t frontend_image ./frontend
-#docker run -d --name frontend --network my_network -p 80:80 frontend_image
+1) Crear una Red Docker:
+    #docker network create my_network
+
+2) Ejecutar un Contenedor para postgresql
+    docker run -d --name db_postgres --network my_network -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=01092003 -e POSTGRES_DB=sistema_de_inscripcion -v postgres_data:/var/lib/postgresql/data -p 5533:5432 postgres:16
+
+
+3) Contruir una Imagen para el Backend    
+    #docker build -t backend_image ./backend
+    #docker run -d --name backend_proyectoI --network my_network -e DB_USER=postgres -e DB_HOST=db_postgres -e DB_DATABASE=sistema_de_inscripcion -e DB_PASSWORD=01092003 -e DB_PORT=5432 -p 6000:6000 backend_image
+
+4) Contruir una Imagen para el Frontend
+    #docker build -t frontend_image ./frontend
+    #docker run -d --name frontend_proyectoI --network my_network -p 90:90 frontend_image
+
+**Parar y Eliminar un Contenedor
+    **Listar Contenedores Activos
+        #docker ps
+    **Para el Contenedor
+        #docker stop backend_proyectoI
+    **Eliminar el Contenedor
+        #docker rm backend_proyectoI
