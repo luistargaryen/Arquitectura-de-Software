@@ -1,4 +1,4 @@
 para ejecutar el docker-compose.yml
-
+facilito
 #docker-compose up -d 
 inmediatamente revissar el docker desktop
